@@ -1,0 +1,34 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  background-image: linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+}
+
+.common-btn{
+  border: 1px solid #B18F6A;
+  text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 10px 15px;
+
+  color: #F1562A;
+  font-size: 16px;
+  text-decoration: none;
+  line-height: 1;
+  transition: all 0.3s;
+  background: transparent;
+  font-weight: 500;
+  font-family: PingFang SC,Hiragino Sans GB,Microsoft YaHei,STHeiti,WenQuanYi Micro Hei,Helvetica,Arial,sans-serif;
+  letter-spacing: 2px;
+}
+
+.common-btn:hover{
+  background: #C8C8A9;
+  color: #555;
+  opacity: 0.8;
+
+}

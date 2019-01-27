@@ -7,7 +7,8 @@ import router from './router'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 
-
+import './style/commonStyle.css'
+import './style/bootstrap.css'
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
