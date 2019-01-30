@@ -6,6 +6,7 @@ import router from './router'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import animate from 'animate.css'
 
 import './style/commonStyle.css'
 import './style/bootstrap.css'

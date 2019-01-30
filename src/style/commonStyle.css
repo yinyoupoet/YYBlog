@@ -1,19 +1,19 @@
-*{
+* {
   padding: 0;
   margin: 0;
 }
 
-body{
+body {
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #fddb92 0%, #d1fdff 100%)         ;
-  background: -o-linear-gradient(to right, #fddb92 0%, #d1fdff 100%)      ;
-  background: -ms-linear-gradient(to right, #fddb92 0%, #d1fdff 100%)     ;
-  background: -moz-linear-gradient(to right, #fddb92 0%, #d1fdff 100%)    ;
-  background: -webkit-linear-gradient(to right, #fddb92 0%, #d1fdff 100%) ;
+  background: linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+  background: -o-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+  background: -ms-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+  background: -moz-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+  background: -webkit-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
 }
 
-.common-btn{
+.common-btn {
   border: 1px solid #B18F6A;
   text-align: center;
   -webkit-border-radius: 3px;
@@ -28,11 +28,11 @@ body{
   transition: all 0.3s;
   background: transparent;
   font-weight: 500;
-  font-family: PingFang SC,Hiragino Sans GB,Microsoft YaHei,STHeiti,WenQuanYi Micro Hei,Helvetica,Arial,sans-serif;
+  font-family: PingFang SC, Hiragino Sans GB, Microsoft YaHei, STHeiti, WenQuanYi Micro Hei, Helvetica, Arial, sans-serif;
   letter-spacing: 2px;
 }
 
-.common-btn:hover{
+.common-btn:hover {
   background: #C8C8A9;
   color: #555;
   opacity: 0.8;
@@ -42,34 +42,31 @@ body{
 
 /*参考：https://blog.csdn.net/u013594477/article/details/80353850 */
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-::-webkit-scrollbar
-{
+::-webkit-scrollbar {
   width: 6px;
   background-color: #fff;
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
-::-webkit-scrollbar-track
-{
+::-webkit-scrollbar-track {
   /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
   border-radius: 10px;
   background-color: #fff;
 }
 
 /*定义滑块 内阴影+圆角*/
-::-webkit-scrollbar-thumb
-{
+::-webkit-scrollbar-thumb {
   border-radius: 10px;
   /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);*/
   background-color: #FACA2E;
 }
+
 /*定义最上方和最下方的按钮*/
-::-webkit-scrollbar-button{
+::-webkit-scrollbar-button {
   background-color: #000;
-  border:1px solid yellow;
+  border: 1px solid yellow;
   display: none;
 }
-
 
 
 /*
@@ -92,3 +89,23 @@ body{
   background: -webkit-linear-gradient(120deg, rgba(132,250,176,0.2) 0%, rgba(143,211,244,0.2) 100%);
 }
 */
+
+.common-img-scale {
+  transition: all 0.5s;
+  outline: 0;
+}
+
+.common-img-scale:hover {
+  transform: scale(1.2);
+}
+
+.common-text-selected {
+  color: #F1562A;
+}
+
+
+.common-route-link{
+  color: #F1562A;
+  cursor: pointer;
+}
+

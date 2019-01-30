@@ -137,12 +137,14 @@
     width: 100%;
     height: 56px;
     padding: 4px;
-    background: #fff;
+    /*background: #fff;*/
+    background: rgba(255,255,255,0.8);
     min-width: 300px;
   }
 
   .top-bar-container {
     position: relative;
+    z-index: 20;
   }
 
   .logo-img {
@@ -166,6 +168,7 @@
   .search-div {
     display: inline-block;
     position: relative;
+
   }
 
   .search-input {
@@ -173,6 +176,7 @@
     border-bottom: 1px solid #5bc0de;
     padding: 8px 10px;
     outline: none;
+    background: transparent;
   }
 
   .search-input:focus {
@@ -239,7 +243,7 @@
   .mobile-menu-cover {
     position: fixed;
     background: #000;
-    z-index: 101;
+    z-index: 10;
     width: 120%;
     height: 120%;
     left: -10%;
