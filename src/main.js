@@ -6,10 +6,10 @@ import router from './router'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
-import animate from 'animate.css'
 
 import './style/commonStyle.css'
 import './style/bootstrap.css'
+import './live2d/css/live2d.css'
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
