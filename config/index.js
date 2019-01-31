@@ -10,7 +10,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+
+    //Cross Domain
+    proxyTable: {
+      '/api': {
+        target: 'http://openapi.tuling123.com/openapi/api/v2',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api':''
+        }
+      }
+    },
+
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
@@ -33,7 +44,10 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    cssSourceMap: true,
+
+
+
   },
 
   build: {

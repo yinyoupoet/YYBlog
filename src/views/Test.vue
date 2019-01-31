@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <div id="open_live2d">召唤伊斯特瓦尔</div>
+    <div id="open_live2d">召唤✺◟(∗❛ัᴗ❛ั∗)◞✺</div>
   </div>
 </template>
 

@@ -4,7 +4,7 @@
       <!--<div class="message" style="opacity:0"></div>-->
       <div class="message"></div>
       <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
-      <div class="live_talk_input_body">
+      <div class="live_talk_input_body" style="display: none;">
         <div class="live_talk_input_name_body">
           <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"
                  placeholder="你的名字"/>
@@ -18,7 +18,7 @@
       <input name="live_talk" id="live_talk" value="1" type="hidden"/>
       <div class="live_ico_box">
         <div class="live_ico_item type_info" id="showInfoBtn"></div>
-        <div class="live_ico_item type_talk" id="showTalkBtn"></div>
+        <div class="live_ico_item type_talk" id="showTalkBtn" style="display: none"></div>
         <div class="live_ico_item type_music" id="musicButton"></div>
         <div class="live_ico_item type_youdu" id="youduButton"></div>
         <div class="live_ico_item type_quit" id="hideButton"></div>
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div id="open_live2d">召唤伊斯特瓦尔</div>
+    <div id="open_live2d">召唤 ('ω') </div>
   </div>
 </template>
 
