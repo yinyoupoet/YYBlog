@@ -7,6 +7,7 @@ import router from './router'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 
+
 import './style/commonStyle.css'
 import './style/bootstrap.css'
 import './live2d/css/live2d.css'
@@ -54,4 +55,12 @@ new Vue({
   router,
   components: { App },
   template: '<App/>'
+})
+
+
+router.beforeEach((to, from, next) => {
+  /*路由发生变化的时候修改页面Title*/
+  if(to.meta.title){
+    document.title = to.meta.title
+  }
 })

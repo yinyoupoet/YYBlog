@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!--头部图片-->
-    <div class="head-img-div" v-bind:style="{backgroundImage: 'url(' + indexImgUrl + ')'}">
+    <div class="head-img-div" v-bind:style="{backgroundImage: 'url(' + indexImgUrl + ')'}" >
     </div>
 
     <!--首页导航-->
@@ -9,12 +9,12 @@
       <div class="container">
         <div class="row">
           <!--头像-->
-          <div class="index-nav-avatar-div col-lg-3">
+          <div class="index-nav-avatar-div col-xs-3">
             <div class="index-nav-avatar common-img-scale"
                  v-bind:style="{backgroundImage: 'url(' + avatarUrl + ')'}"></div>
           </div>
           <!--三个目录-->
-          <div class="index-nav-category-div col-lg-6">
+          <div class="index-nav-category-div col-xs-6">
             <div v-for="category in indexNavCategories" :key="category.index" class="index-nav-categories "
                  v-bind:class="{'common-text-selected': category.isSelected}"
                  v-on:mouseover="indexNavHover($event)"
@@ -24,7 +24,7 @@
 
           </div>
           <!--面包屑导航-->
-          <div class="index-breadcrumb-nav col-lg-3" v-show="showBreadCrumb">
+          <div class="index-breadcrumb-nav" v-show="showBreadCrumb">
             <span class="common-route-link">
               <span class="glyphicon glyphicon-home breadcrumb-icon"></span>首页
             </span>&nbsp;>>&nbsp;<span class="breadcrumb-content">{{breadCrumbContent}}</span>
@@ -69,7 +69,7 @@
           isSelected: false
         },],
         showBreadCrumb: true,
-        breadCrumbContent: '归档'
+        breadCrumbContent: '归档',
       }
     },
     methods: {
@@ -175,6 +175,8 @@
     font-weight: 500;
     padding: 20px 15px;
     color: #999;
+    padding-right: 0;
+    margin-right: 0;
   }
 
   .breadcrumb-icon {
@@ -183,5 +185,22 @@
 
   .breadcrumb-content {
     color: #5f5f5f;
+  }
+
+  @media screen and (max-width: 899px){
+    .index-head-nav{
+      display: none;
+    }
+    .head-img-div{
+      display: none;
+    }
+  }
+  @media screen and (min-width: 900px){
+    .index-head-nav{
+      display: block;
+    }
+    .head-img-div{
+      display: block;
+    }
   }
 </style>

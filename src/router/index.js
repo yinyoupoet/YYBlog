@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Index from '@/views/Index'
 
-import Test from '@/views/Test'
 
 Vue.use(Router)
 

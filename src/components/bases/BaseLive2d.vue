@@ -23,9 +23,10 @@
         <div class="live_ico_item type_youdu" id="youduButton"></div>
         <div class="live_ico_item type_quit" id="hideButton"></div>
         <input name="live_statu_val" id="live_statu_val" value="0" type="hidden"/>
+        <!--真正的音乐播放器-->
         <audio src="" style="display:none;" id="live2d_bgm" data-bgm="0" preload="none"></audio>
-        <input name="live2dBGM" value="http://www.ytmp3.cn/down/57880.mp3" type="hidden">
-        <input name="live2dBGM" value="http://www.ytmp3.cn/down/57877.mp3" type="hidden">
+        <!--音乐列表-->
+        <input name="live2dBGM" v-for="bgm of bgms" v-bind:value="bgm" type="hidden">
         <input id="duType" value="douqilai,l2d_caihong" type="hidden">
       </div>
     </div>
@@ -42,7 +43,12 @@
   var message = require("./../../live2d/js/message.js")
 
   export default {
-    name: "BaseLive2d"
+    name: "BaseLive2d",
+    data: function () {
+      return {
+        bgms: ["http://other.web.ra01.sycdn.kuwo.cn/resource/n1/fromape/16/9516.mp3","http://sb.sycdn.kuwo.cn/resource/n1/99/52/3524054497.mp3","http://www.ytmp3.cn/down/57880.mp3","http://www.ytmp3.cn/down/57877.mp3"]
+      }
+    }
   }
 </script>
 

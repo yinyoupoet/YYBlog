@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <!--不是手机的时候-->
-    <div class="container top-bar-container" v-if="!isMobil">
+    <div class="container top-bar-container">
       <img src="../../assets/logo1_1.png" class="logo-img">
       <div class="topbar-right">
         <div class="search-div">
@@ -23,7 +23,7 @@
     </div>
 
     <!--是手机访问的情况-->
-    <div class="container-fluid mobile-top-bar-container" v-if="isMobil">
+    <div class="container-fluid mobile-top-bar-container">
       <img src="../../assets/logo1_1.png" class="mobile-logo-img">
       <div class="mobile-top-bar-author">
         <span class="mobile-top-bar-author-text">{{authorName}}</span>
@@ -49,13 +49,14 @@
     </div>
 
     <transition name="fade">
-      <div class="mobile-menu-cover" v-if="showMenu && isMobil" v-on:click="closeMenu">
+      <div class="mobile-menu-cover" v-if="showMenu" v-on:click="closeMenu">
       </div>
     </transition>
   </div>
 </template>
 
 <script>
+  // var jquery = require('./../../style/jquery-3.1.1.min')
   export default {
     name: "BaseTopBar",
     data: function () {
@@ -70,55 +71,8 @@
             href: "#"
           }],
         isLogin: true,
-        screenWidth: document.body.clientWidth,
-        isMobil: false,
-        authorName: '吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人吟游诗人',
-        mobileWidth: 900,
-        showMenu: false
-      }
-    },
-    mounted() {
-      this.screenWidth = document.body.clientWidth
-      if (this.screenWidth < this.mobileWidth) {
-        this.isMobil = true
-      } else {
-        this.isMobil = false
-      }
-      const that = this
-      window.onresize = () => {
-        return (() => {
-          window.screenWidth = document.body.clientWidth
-          that.screenWidth = window.screenWidth
-          if (that.screenWidth < this.mobileWidth) {
-            this.isMobil = true
-          } else {
-            this.isMobil = false
-          }
-        })()
-      }
-    },
-    watch: {
-      screenWidth(val) {
-        // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
-        if (!this.timer) {
-          // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
-          this.screenWidth = val
-          this.timer = true
-          let that = this
-
-          if (val < this.mobileWidth) {
-            this.isMobil = true
-          } else {
-            this.isMobil = false
-          }
-
-
-          setTimeout(function () {
-            // 打印screenWidth变化的值
-            //console.log(that.screenWidth)
-            that.timer = false
-          }, 400)
-        }
+        authorName: '吟游诗人',
+        showMenu: false,
       }
     },
     methods: {
@@ -305,6 +259,24 @@
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+  }
+
+  @media screen and (max-width: 899px) {
+    .top-bar-container{
+      display: none;
+    }
+    .mobile-top-bar-container{
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    .mobile-top-bar-container{
+      display: none;
+    }
+    .top-bar-container{
+      display: block;
+    }
   }
 
 </style>
