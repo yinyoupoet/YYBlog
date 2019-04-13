@@ -1,3 +1,22 @@
+
+/*
+*     live2d_type设置为不同的值的不同表现，输入为2的话是不会显示的
+*     if (live2d_type == 0) {
+        msgType = 'message.json';
+      } else if (live2d_type == 1) {
+        msgType = 'message_rem.json';
+      } else if (live2d_type == 3) {
+        msgType = 'message_pio_tia.json';
+      } else if (live2d_type == 4) {
+        msgType = 'message_pio_tia.json';
+      } else if (live2d_type == 5) {
+        msgType = 'message_pio_tia.json';
+      } else if (live2d_type == 6) {
+        msgType = 'message_pio_tia.json';
+      }
+*
+* */
+
 var live2d_type = 5;
 var message_Path = "/static/"
 var home_Path = document.location.protocol + '//' + window.document.location.hostname + ':8080' + '/';

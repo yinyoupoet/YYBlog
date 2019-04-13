@@ -123,6 +123,7 @@
     background: rgba(255, 255, 255, 1);
     top: -64px;
     z-index: 2;
+    border-bottom: 1px solid #eee;
   }
 
   .index-nav-avatar-div {
@@ -132,7 +133,7 @@
     padding: 5px;
     background: #fff;
     border-radius: 15px;
-    position: relative;
+    position: absolute;
     top: -100px;
     opacity: 1;
     z-index: 3;
@@ -155,7 +156,7 @@
 
   .index-nav-category-div {
     padding: 20px 15px;
-    margin-left: 30px;
+    margin-left: 230px;
   }
 
   .index-nav-categories {

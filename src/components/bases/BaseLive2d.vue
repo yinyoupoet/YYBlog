@@ -4,6 +4,7 @@
       <!--<div class="message" style="opacity:0"></div>-->
       <div class="message"></div>
       <canvas id="live2d" width="500" height="560" class="live2d"></canvas>
+      <!--<canvas id="live2d" width="300" height="336" class="live2d"></canvas>-->
       <div class="live_talk_input_body" style="display: none;">
         <div class="live_talk_input_name_body">
           <input name="name" type="text" class="live_talk_name white_input" id="AIuserName" autocomplete="off"

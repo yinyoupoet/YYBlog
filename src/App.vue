@@ -2,7 +2,14 @@
   <div id="app">
     <BaseTopBar></BaseTopBar>
     <router-view></router-view>
+
+    <div class="container main-container">
+      <index-main></index-main>
+      <!--<index-archive></index-archive>-->
+    </div>
+
     <BaseLive2d></BaseLive2d>
+
   </div>
 </template>
 
@@ -11,25 +18,34 @@
 
   import BaseTopBar from "./components/bases/BaseTopBar";
   import BaseLive2d from "./components/bases/BaseLive2d";
+  import BaseUserPageInfo  from "./components/bases/BaseUserPageInfo"
+  import BaseFollowingModule from "./components/bases/BaseFollowingModule";
+  import BaseFollowersModule from "./components/bases/BaseFollowersModule";
+  import BaseRecentVisit from "./components/bases/BaseRecentVisit";
+  import BaseBlogList from "./components/bases/BaseBlogList";
+  import BaseBottomBar from "./components/bases/BaseBottomBar";
+  import BaseArchive from "./components/bases/BaseArchive";
+  import IndexMain from "./components/MainIndexComponent/indexMain";
+  import IndexArchive from "./components/MainIndexComponent/indexArchive";
 
-  export default {
+ export default {
     name: 'App',
-    components: {BaseLive2d, BaseTopBar}
+   components: {
+     IndexArchive,
+     IndexMain,
+     BaseArchive,
+     BaseBottomBar,
+     BaseBlogList,
+     BaseRecentVisit, BaseFollowersModule, BaseLive2d, BaseTopBar, BaseUserPageInfo,BaseFollowingModule}
   }
 
-  /*import "https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js";*/
-
 </script>
-
-<!--
-<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/1.7.1/jquery.min.js"></script>
-<script>
-  var message_Path = '/live2d/';//资源目录，如果目录不对请更改
-  var talkAPI = "";//如果有类似图灵机器人的聊天接口请填写接口路径
-</script>
-<script type="text/javascript" src="live2d/js/live2d.js"></script>
-<script type="text/javascript" src="live2d/js/message.js"></script>-->
 
 <style>
+
+
+
+
+
 
 </style>

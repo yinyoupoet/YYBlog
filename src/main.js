@@ -11,10 +11,12 @@ import camelCase from 'lodash/camelCase'
 import './style/commonStyle.css'
 import './style/bootstrap.css'
 import './live2d/css/live2d.css'
+import './style/font-awesome.css'
+import './style/csshake.css'
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
-  './components',
+  './components/bases',
   // 是否查询其子目录
   false,
   // 匹配基础组件文件名的正则表达式

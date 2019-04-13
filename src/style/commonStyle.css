@@ -10,11 +10,22 @@ body {
   min-width: 300px;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+/*  background: linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
   background: -o-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
   background: -ms-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
   background: -moz-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
-  background: -webkit-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);
+  background: -webkit-linear-gradient(to right, #fddb92 0%, #d1fdff 100%);*/
+  background: #fff;
+  scroll-behavior:smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  transition: 0.5s ease all;
+}
+
+/* 这个class不提供直接样式，是专门针对“桌面小人血小板”制作，添加了该class的内容将会在hover的时候被血小板说出来 */
+.common-hover-show{
+
 }
 
 .common-btn {
@@ -40,29 +51,36 @@ body {
   background: #C8C8A9;
   color: #555;
   opacity: 0.8;
+  box-shadow: 0px 0px 5px #666 inset;
+}
 
+.common-btn:focus{
+  outline: 0;
 }
 
 
 /*参考：https://blog.csdn.net/u013594477/article/details/80353850 */
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar {
-  width: 6px;
-  background-color: #fff;
+  width: 10px;
+  background-color: #F5F5F5;
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
 ::-webkit-scrollbar-track {
-  /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
-  border-radius: 10px;
+  /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;*/
   background-color: #fff;
+  border-radius: 10px;
 }
 
 /*定义滑块 内阴影+圆角*/
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);*/
-  background-color: #FACA2E;
+
+  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
+  background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
 }
 
 /*定义最上方和最下方的按钮*/
@@ -113,3 +131,129 @@ body {
   cursor: pointer;
 }
 
+
+/* 对ul样式和li样式进行定义 */
+.common-list-ul{
+  list-style: none;
+}
+.common-list-ul li:before{
+  content:'';
+  width: 8px;
+  height: 8px;
+  top:6px;
+  float: left;
+  position: relative;
+
+  margin-right: 8px;
+  background: #70e7e5;
+  border:solid #a5a5a5 2px;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+.common-list-li{
+  padding-bottom: 5px;
+}
+
+/* 定义a标签样式 */
+.common-link {
+  font-size:16px;
+  cursor:pointer;
+  color: #e87b00;
+
+  transition: all 0.5s;
+}
+.common-link:link {
+  color: #e87b00;
+  text-decoration:none;
+  cursor:pointer;
+}
+.common-link:active{
+  color: #e87b00;
+  cursor:pointer;
+}
+.common-link:visited {
+  color: #e87b00;
+  text-decoration:none;
+  cursor:pointer;
+}
+.common-link:hover {
+  color: #f1562a;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+
+
+/* 通用文章标题样式 */
+.common-title-link{
+  cursor:pointer;
+  color: #333;
+  font-family: "Comic Sans MS", "Helvetica Neue", 微软雅黑, "Microsoft Yahei", "Microsoft Yahei", -apple-system, sans-serif;
+  transition: all 0.5s;
+}
+
+.common-title-link:link {
+  color: #e87b00;
+  text-decoration:none;
+  cursor:pointer;
+}
+.common-title-link:active{
+  color: #e87b00;
+  cursor:pointer;
+}
+.common-title-link:visited {
+  color: #333;
+  text-decoration:none;
+  cursor:pointer;
+}
+.common-title-link:hover {
+  color: #fff;
+  /*text-shadow: rgb(69, 45, 45) 0px 0px 1px, rgb(255, 255, 251) 0px 0px 1px, rgb(255, 255, 251) 0px 0px 2px;*/
+  text-shadow: #000 0px 1px 1px, #000 -1px 0px 2px, #000 0 0 5px;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+/* 分页显示的导航栏 */
+.common-page-split-ul{
+  list-style: none;
+  display: block;
+  text-align: center;
+}
+
+.common-page-split-li{
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+  position: relative;
+  text-align: -webkit-match-parent;
+  cursor: pointer;
+  outline: none;
+  color: #888;
+}
+
+.common-page-split-li:hover{
+  background: rgba(250,250,250,0.7);
+}
+
+.common-page-split-span{
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.common-page-split-li-selected{
+  background: #1ABC9C;
+  color: #fff;
+}
+.common-page-split-li-selected:hover{
+  background: #1ABC9C;
+  color: #fff;
+}
