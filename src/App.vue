@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <BaseTopBar></BaseTopBar>
+    <!--<BaseTopBar></BaseTopBar>
     <router-view></router-view>
 
     <div class="container main-container">
       <index-main></index-main>
-      <!--<index-archive></index-archive>-->
+      &lt;!&ndash;<index-archive></index-archive>&ndash;&gt;
     </div>
 
-    <BaseLive2d></BaseLive2d>
+    <BaseLive2d></BaseLive2d>-->
+    <router-view></router-view>
 
   </div>
 </template>

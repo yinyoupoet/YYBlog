@@ -23,6 +23,23 @@ body {
   transition: 0.5s ease all;
 }
 
+
+*::selection {
+  background-color: #8080c0;
+  color: #fff;
+}
+/**::-moz-selection {
+  background-color: #b981d1;
+  color: white;
+}
+*::-webkit-selection {
+  background-color: #b981d1;
+  color: white;
+}*/
+
+
+
+
 /* 这个class不提供直接样式，是专门针对“桌面小人血小板”制作，添加了该class的内容将会在hover的时候被血小板说出来 */
 .common-hover-show{
 

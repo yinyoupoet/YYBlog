@@ -14,7 +14,7 @@
           <img src="/static/head/1.jpg" class="head-img"/>
         </template>
         <template v-else>
-          <button class="common-btn top-btn">
+          <button class="common-btn top-btn" @click="appearLogin()">
             登录/注册
           </button>
         </template>
@@ -52,6 +52,47 @@
       <div class="mobile-menu-cover" v-if="showMenu" v-on:click="closeMenu">
       </div>
     </transition>
+
+
+    <!--登录注册框-->
+    <div class="login-register-bg-div" v-if="showLogin" @click="disappearLogin()">
+      <div class="login-register-div" @click.stop="LoginDivClick()">
+        <!--控制是登录还是注册-->
+        <div class="login-register-option-div row">
+          <div class="col-xs-6 login-option-div login-register-option"
+               v-bind:class="loginOrRegister?'option-selected':'option-not-selected'"
+               @click="selectLogin()">
+            登录
+          </div>
+          <div class="col-xs-6 register-option-div login-register-option"
+               v-bind:class="!loginOrRegister?'option-selected':'option-not-selected'"
+               @click="selectRegister()">
+            注册
+          </div>
+        </div>
+
+        <!--登录页面-->
+        <div class="login-page-div" v-if="loginOrRegister">
+          <img src="../../assets/logo1_1.png" class="login-logo">
+          <input class="input-style" placeholder="用户名" type="text"><br>
+          <input class="input-style" placeholder="密码" type="password">
+            <br>
+          <button class="login-register-btn">登录</button>
+        </div>
+
+        <!--注册页面-->
+        <div class="register-page-div" v-if="!loginOrRegister">
+          <img src="../../assets/logo1_1.png" class="register-logo">
+          <input class="input-style" placeholder="用户名" type="text"><br>
+          <input class="input-style" placeholder="密码" type="password">
+          <input class="input-style" placeholder="记住密码" type="password">
+          <br>
+          <button class="login-register-btn">注册</button>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -70,9 +111,11 @@
             value: "友链",
             href: "#"
           }],
-        isLogin: true,
+        isLogin: false,
         authorName: '吟游诗人',
         showMenu: false,
+        showLogin: false,  /*是否显示登录注册界面*/
+        loginOrRegister: true,  /*true表示选中了login，false表示选中了register*/
       }
     },
     methods: {
@@ -81,6 +124,21 @@
       },
       openMenu: function () {
         this.showMenu = true;
+      },
+      appearLogin: function(){
+        this.showLogin = true
+      },
+      disappearLogin: function(){
+        this.showLogin = false;
+      },
+      LoginDivClick: function () {
+        // 啥也不干，为了屏蔽点击就消失的那个事件
+      },
+      selectLogin: function () {
+        this.loginOrRegister = true;
+      },
+      selectRegister: function() {
+        this.loginOrRegister = false;
       }
     }
   }
@@ -278,5 +336,143 @@
       display: block;
     }
   }
+
+
+  .login-register-bg-div{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 30;
+    padding-left: 0;
+  }
+
+
+  @media screen  and (max-height: 667px) {
+    .login-register-div{
+      height: 60%;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      background: #fff;
+      z-index: 40;
+    }
+  }
+  @media screen  and (min-height: 668px) {
+    .login-register-div{
+      height: 400px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      background: #fff;
+      z-index: 40;
+    }
+  }
+
+  .login-register-div{
+    /*border-radius: 20px;*/
+    width: 400px;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.3);
+    outline: none;
+    overflow-y: auto;
+  }
+
+  .login-register-option-div{
+    text-align: center;
+    margin: 0;
+  }
+
+  .login-register-option{
+    padding: 15px;
+    cursor: pointer;
+    color: #777;
+    transition: all 0.5s;
+    font-size: 1.25em;
+    font-weight: 400;
+  }
+
+  .option-selected:hover{
+    box-shadow: inset 0 0 20px #e2d1c3;
+  }
+
+  .option-selected{
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+  }
+  .option-not-selected:hover{
+    color: #f1562a;
+    text-shadow: 0px 0px 20px #e87b00;
+  }
+
+
+  .login-option-div{
+    border-bottom: 1px solid #ccc;
+  }
+  .register-option-div{
+    border-bottom: 1px solid #ccc;
+  }
+
+  .login-page-div{
+    padding: 30px 30px 20px;
+    text-align: center;
+  }
+
+  .input-style{
+    width: 80%;
+    margin-bottom: 15px;
+    line-height: 2em;
+    padding: 0 8px 8px;
+    outline: none;
+    border-radius: 2px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    font-weight: 400;
+    font-size: 1em;
+    letter-spacing: 1px;
+
+  }
+
+  .input-style:focus{
+    border-bottom: 2px solid #e87b00;
+  }
+
+  .login-logo{
+    height: 80px;
+    margin-bottom: 40px;
+  }
+
+  .login-register-btn{
+    padding: 10px 25px;
+    outline: none;
+    background: #fff;
+    color: #558b2f;
+    text-shadow: 0px 0px 1px rgba(0,0,0,0.3);
+    font-weight: 400;
+    border: 2px solid #7cc374;
+    border-radius: 5px;
+    transition: all 0.5s;
+    font-weight: 400;
+  }
+
+  .login-register-btn:hover{
+    background: #7cc374;
+    color: #fff;
+    box-shadow: 0 0 10px #558b2f;
+  }
+
+  .register-page-div{
+    padding: 25px 30px 15px;
+    text-align: center;
+  }
+
+  .register-logo{
+    height: 60px;
+    margin-bottom: 30px;
+  }
+
 
 </style>
