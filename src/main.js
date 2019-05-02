@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'babel-polyfill'
+import axios from 'axios'
 
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
@@ -13,6 +15,11 @@ import './style/bootstrap.css'
 import './live2d/css/live2d.css'
 import './style/font-awesome.css'
 import './style/csshake.css'
+import './api/md5'
+
+import './api/md-avatar'
+
+Vue.prototype.$http = axios
 
 const requireComponent = require.context(
   // 其组件目录的相对路径
@@ -65,4 +72,5 @@ router.beforeEach((to, from, next) => {
   if(to.meta.title){
     document.title = to.meta.title
   }
+  next();
 })

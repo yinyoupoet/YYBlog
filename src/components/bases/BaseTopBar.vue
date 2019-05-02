@@ -10,14 +10,49 @@
         <button v-for="btn of btns" class="common-btn top-btn">
           {{btn.value}}
         </button>
-        <template v-if="isLogin">
-          <img src="/static/head/1.jpg" class="head-img"/>
-        </template>
-        <template v-else>
-          <button class="common-btn top-btn" @click="appearLogin()">
-            登录/注册
-          </button>
-        </template>
+        <div class="avatar-div"
+             @mouseover="showUserMenu=true"
+              @mouseleave="showUserMenu=false">
+          <template v-if="isLogin">
+            <img :src="userHeadImgUrl" class="head-img"/>
+          </template>
+          <template v-else>
+            <button class="common-btn top-btn" @click="appearLogin()">
+              登录/注册
+            </button>
+          </template>
+
+          <!--transition是用来渐变显示的，这样的好处其实是方便鼠标移动到外边那个div内部，如果不是渐变，很容易就移出去了-->
+          <transition name="fade">
+            <div class="user-menu" v-if="showUserMenu">
+              <ul class="user-menu-ul">
+                <li class="user-menu-li">
+                  <i class="fa fa-user-o" aria-hidden="true"></i>
+                  <a href="#" class="user-menu-a">个人中心</a>
+                </li>
+                <li class="user-menu-li">
+                  <!--<i class="fa fa-cog" aria-hidden="true"></i>-->
+                  <i class="fa fa-meh-o" aria-hidden="true"></i>
+                  <a href="#" class="user-menu-a">账号设置</a>
+                </li>
+                <li class="user-menu-li">
+                  <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+                  <a href="#" class="user-menu-a">我的博客</a>
+                </li>
+                <li class="user-menu-li">
+                  <i class="fa fa-server" aria-hidden="true"></i>
+                  <a href="#" class="user-menu-a">博客管理</a>
+                </li>
+                <li class="user-menu-li">
+                  <!--<i class="fa fa-empire" aria-hidden="true"></i>-->
+                  <!--<i class="fa fa-frown-o" aria-hidden="true"></i>-->
+                  <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                  <a href="#" class="user-menu-a">退出登录</a>
+                </li>
+              </ul>
+            </div>
+          </transition>
+        </div>
 
       </div>
     </div>
@@ -42,14 +77,15 @@
           <template v-else>
             <li>登录/注册</li>
           </template>
-
         </ul>
       </div>
 
     </div>
 
+
     <transition name="fade">
       <div class="mobile-menu-cover" v-if="showMenu" v-on:click="closeMenu">
+
       </div>
     </transition>
 
@@ -74,20 +110,20 @@
         <!--登录页面-->
         <div class="login-page-div" v-if="loginOrRegister">
           <img src="../../assets/logo1_1.png" class="login-logo">
-          <input class="input-style" placeholder="用户名" type="text"><br>
-          <input class="input-style" placeholder="密码" type="password">
+          <input class="input-style" placeholder="用户名" type="text" v-model="loginUserName"><br>
+          <input class="input-style" placeholder="密码" type="password" v-model="loginUserPwd">
             <br>
-          <button class="login-register-btn">登录</button>
+          <button class="login-register-btn" @click="doLogin()">登录</button>
         </div>
 
         <!--注册页面-->
         <div class="register-page-div" v-if="!loginOrRegister">
           <img src="../../assets/logo1_1.png" class="register-logo">
-          <input class="input-style" placeholder="用户名" type="text"><br>
-          <input class="input-style" placeholder="密码" type="password">
-          <input class="input-style" placeholder="记住密码" type="password">
+          <input class="input-style" placeholder="用户名" type="text" v-model="loginUserName"><br>
+          <input class="input-style" placeholder="密码" type="password" v-model="loginUserPwd">
+          <input class="input-style" placeholder="记住密码" type="password" v-model="loginUserRepeatPwd">
           <br>
-          <button class="login-register-btn">注册</button>
+          <button class="login-register-btn" @click="doRegister()">注册</button>
         </div>
 
       </div>
@@ -97,9 +133,31 @@
 </template>
 
 <script>
-  // var jquery = require('./../../style/jquery-3.1.1.min')
+
   export default {
     name: "BaseTopBar",
+
+    created(){
+      // 刚进入页面，对页面进行初始化操作
+      if(sessionStorage.getItem("isLogin") == null || sessionStorage.getItem("isLogin") == 'false'){
+        this.isLogin = false;
+      }else {
+        this.isLogin = true;
+      }
+
+      if(sessionStorage.getItem('userHeadImgUrl') != null){
+        this.userHeadImgUrl = sessionStorage.getItem('userHeadImgUrl');
+      }else{
+        var userName = sessionStorage.getItem("userName");
+        var avatar = new mdAvatar({
+          size: 100,
+          text: userName
+        });
+        var tempSrc = avatar.toDataURL("image/png");
+        this.userHeadImgUrl = tempSrc;
+      }
+    },
+
     data: function () {
       return {
         btns: [
@@ -113,11 +171,17 @@
           }],
         isLogin: false,
         authorName: '吟游诗人',
-        showMenu: false,
+        showMenu: false,  /*手机访问的时候的菜单*/
         showLogin: false,  /*是否显示登录注册界面*/
         loginOrRegister: true,  /*true表示选中了login，false表示选中了register*/
+        loginUserName: '',  /*登录注册用户名*/
+        loginUserPwd: '',   /*登录注册用户密码*/
+        loginUserRepeatPwd: '',  /*登录注册用户重复密码*/
+        userHeadImgUrl: '',  /*用户头像图片地址，自己的*/
+        showUserMenu: false,  /*用户移动鼠标到头像上，则会显示用户菜单*/
       }
     },
+
     methods: {
       closeMenu: function () {
         this.showMenu = false;
@@ -126,7 +190,7 @@
         this.showMenu = true;
       },
       appearLogin: function(){
-        this.showLogin = true
+        this.showLogin = true;
       },
       disappearLogin: function(){
         this.showLogin = false;
@@ -135,10 +199,114 @@
         // 啥也不干，为了屏蔽点击就消失的那个事件
       },
       selectLogin: function () {
+        // 注册转登录或直接打开登录，不清密码
         this.loginOrRegister = true;
       },
       selectRegister: function() {
+        // 登录转注册，清除密码
+        this.loginUserPwd = '';
+        this.loginUserRepeatPwd = '';
+
         this.loginOrRegister = false;
+      },
+      doLogin: function(){
+
+        if(this.loginUserName.trim() == ""){
+          alert("请输入用户名");
+          return;
+        }
+        if(this.loginUserPwd.trim() == ""){
+          alert("请输入密码");
+          return;
+        }
+        this.$http.post('http://127.0.0.1:8080/userInfo/login', {
+          userName: this.loginUserName,
+          userPwd: this.loginUserPwd.MD5()
+        }).then((response) => {
+          if(response.data.state == 'false'){
+            // 出错了
+            alert(error);
+            return;
+          }
+          // 否则就是登录成功了
+          this.showLogin = false;
+          this.isLogin = true;
+
+          // 将登录状态存入sessionStorage
+          sessionStorage.setItem("isLogin", true);
+          sessionStorage.setItem("userId", response.data.userAccount.userId);
+          sessionStorage.setItem("userName", response.data.userAccount.userName);
+
+          //初始化头像
+          var userName = sessionStorage.getItem("userName");
+          var avatar = new mdAvatar({
+            size: 100,
+            text: userName
+          });
+          var tempSrc = avatar.toDataURL("image/png");
+          this.userHeadImgUrl = tempSrc;
+
+        }).catch((error) => {
+          console.log("error: " + error);
+        });
+
+
+      },
+      doRegister: function() {
+        // 先验证用户名、密码等是否合法，合法才继续
+        // 不过由于用户名重复等问题已经在后台进行了验证，因此前端可以稍微简单一点
+        if(this.loginUserName.trim() == ""){
+          alert("请输入用户名");
+          return;
+        }
+        if(this.loginUserName.length > 16){
+          alert("用户名长度不能大于16，请重试");
+          return;
+        }
+        if(this.loginUserPwd != this.loginUserRepeatPwd){
+          alert("两次输入的密码不一样，请重试");
+          return;
+        }
+        if(this.loginUserPwd.length < 6 || this.loginUserPwd.length > 16){
+          alert("密码长度应在6到16之间，请重试");
+          return;
+        }
+
+
+        // 下面是验证成功后才执行的操作
+        this.$http.post('http://127.0.0.1:8080/userInfo/register',{
+            userName: this.loginUserName,
+            userPwd: this.loginUserPwd.MD5()
+        }).then((response) => {
+          // 判断是成功还是失败了
+          if(response.data.state == "false"){
+            alert(response.data.error);
+            return;
+          }
+          // 否则就是登录成功了
+          this.showLogin = false;
+          this.isLogin = true;
+
+          // 将登录状态存入sessionStorage
+          sessionStorage.setItem("isLogin", true);
+          sessionStorage.setItem("userId", response.data.userAccount.userId);
+          sessionStorage.setItem("userName", response.data.userAccount.userName);
+
+
+          //初始化头像
+          var userName = sessionStorage.getItem("userName");
+          var avatar = new mdAvatar({
+            size: 100,
+            text: userName
+          });
+          var tempSrc = avatar.toDataURL("image/png");
+          this.userHeadImgUrl = tempSrc;
+
+
+
+        }).catch(function (error) {
+          console.log(error);
+        });
       }
     }
   }
@@ -171,6 +339,7 @@
     display: inline-block;
     text-align: right;
     width: 100%;
+    padding-right: 50px;
   }
 
   .top-btn {
@@ -200,6 +369,9 @@
     height: 40px;
     border-radius: 50% 50%;
     cursor: pointer;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 5px;
   }
 
   .mobile-top-bar-container {
@@ -334,6 +506,7 @@
     }
     .top-bar-container{
       display: block;
+      padding-right: 100px;
     }
   }
 
@@ -473,6 +646,81 @@
     height: 60px;
     margin-bottom: 30px;
   }
+
+
+  .avatar-div {
+    display: inline-block;
+    position: absolute;
+  }
+
+  .user-menu{
+    width: 120px;
+    background: #fff;
+    position: absolute;
+    padding-top: 60px;
+    z-index: 15;
+    margin-left: -70px;
+    border-radius: 0 0 10px 10px;
+    z-index: -1;
+    box-shadow:0px 15px 10px -15px #999;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+
+  .user-menu-ul{
+    list-style: none;
+  }
+
+  .user-menu-li{
+    display: block;
+    padding: 5px;
+    padding-right: 20px;
+    line-height: 1.5em;
+    color: #999;
+  }
+  .user-menu-li:hover{
+    background: #eee;
+  }
+
+  .user-menu-a{
+    margin-left: 5px;
+    cursor:pointer;
+    color: #333;
+    font-family: "Comic Sans MS", "Helvetica Neue", 微软雅黑, "Microsoft Yahei", "Microsoft Yahei", -apple-system, sans-serif;
+    transition: all 0.5s;
+  }
+  .user-menu-a:link {
+    color: #e87b00;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .user-menu-a:active{
+    color: #e87b00;
+    cursor:pointer;
+  }
+  .user-menu-a:visited {
+    color: #333;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .user-menu-a:hover {
+    color: #fff;
+    /*text-shadow: rgb(69, 45, 45) 0px 0px 1px, rgb(255, 255, 251) 0px 0px 1px, rgb(255, 255, 251) 0px 0px 2px;*/
+    text-shadow: #000 0px 1px 1px, #000 -1px 0px 2px, #000 0 0 5px;
+    text-decoration:none;
+    cursor:pointer;
+  }
+
+
+
+
+
+
 
 
 </style>

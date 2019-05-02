@@ -12,7 +12,9 @@
         <!-- 博客列表 -->
         <div class="blog-item" v-for="(item,index) in bloglist" :key="item.id">
           <h3 class="blog-title-h3">
+            <router-link to="/blog/123" @click.native="rou($event)">鬼鬼</router-link>
             <a :href="item.blogLink" class="common-link title-link">
+            <!--<a @click="rou()" class="common-link title-link">-->
               <span class="blog-top-tag" v-if="item.isTop">[TOP]</span>
               <span class="common-title-link common-hover-show">{{item.blogTitle}}</span>
             </a>
@@ -92,7 +94,18 @@
               }
             ]
           }
-        }
+        },
+      methods: {
+          rou: function($event) {
+            /*console.log("执行了");
+            var ele = $event.currentTarget;
+            console.log(ele);
+            $(ele).unbind();
+            console.log("取消绑定");*/
+            console.log(this);
+            this.$router.push({path: '/blog/123'});
+          }
+      }
     }
 </script>
 
@@ -175,3 +188,5 @@
     border: 0;
   }
 </style>
+
+
