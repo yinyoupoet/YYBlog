@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-import UserMainPage from '../views/User/UserMainPage'
-import UserArchive from '../views/User/UserArchive'
 import UserPage from '../views/User/UserPage'
-import UserMessageBoard from "../views/User/UserMessageBoard";
 import BlogPage from "../views/blog/BlogPage";
 import BlogMainPage from "../views/blog/BlogMainPage";
+import BaseBlogList from "../components/bases/BaseBlogList";
+import BaseArchive from "../components/bases/BaseArchive";
+import indexMessageBoard from "../components/MainIndexComponent/indexMessageBoard";
 
 
 Vue.use(Router)
@@ -16,26 +16,28 @@ export default new Router({
   routes: [
     {
       path: '/user/:id',
-      name: 'UserPage',
       component: UserPage,
       children: [
         {
           path: 'archive',
-          component: UserArchive
+          component: BaseArchive
         },
         {
           path: 'messageBoard',
-          component: UserMessageBoard
+          component: indexMessageBoard
         },
         {
           path: '/',
-          component: UserMainPage
+          component: BaseBlogList
+        },
+        {
+          path: '*',
+          component: BaseBlogList
         }
       ]
     },
     {
       path: '/blog/:id',
-      name: 'BlogPage',
       component: BlogPage,
       children: [
         {

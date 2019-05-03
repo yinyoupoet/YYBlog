@@ -12,12 +12,13 @@
         <!-- 博客列表 -->
         <div class="blog-item" v-for="(item,index) in bloglist" :key="item.id">
           <h3 class="blog-title-h3">
-            <router-link to="/blog/123" @click.native="rou($event)">鬼鬼</router-link>
-            <a :href="item.blogLink" class="common-link title-link">
+           <!-- <a :href="item.blogLink" class="common-link title-link">-->
+            <router-link :to="item.blogLink" class="common-link title-link">
             <!--<a @click="rou()" class="common-link title-link">-->
               <span class="blog-top-tag" v-if="item.isTop">[TOP]</span>
               <span class="common-title-link common-hover-show">{{item.blogTitle}}</span>
-            </a>
+            <!--</a>-->
+            </router-link>
           </h3>
           <div class="blog-info-bar">
             <i class="fa fa-github-alt" aria-hidden="true"></i>{{item.publishDate}} •
@@ -58,7 +59,7 @@
             bloglist: [
               {
                 blogId: 1,
-                blogLink: "http://www.baidu.com",
+                blogLink: "/blog/1",
                 isTop:true,
                 blogTitle: "乐生",
                 publishDate: "2019-03-14",
@@ -76,7 +77,7 @@
               },
               {
                 blogId: 1,
-                blogLink: "http://www.baidu.com",
+                blogLink: "/blog/2",
                 isTop:true,
                 blogTitle: "乐生",
                 publishDate: "2019-03-14",

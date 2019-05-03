@@ -26,14 +26,11 @@
   import BaseBlogList from "./components/bases/BaseBlogList";
   import BaseBottomBar from "./components/bases/BaseBottomBar";
   import BaseArchive from "./components/bases/BaseArchive";
-  import IndexMain from "./components/MainIndexComponent/indexMain";
-  import IndexArchive from "./components/MainIndexComponent/indexArchive";
+
 
  export default {
     name: 'App',
    components: {
-     IndexArchive,
-     IndexMain,
      BaseArchive,
      BaseBottomBar,
      BaseBlogList,

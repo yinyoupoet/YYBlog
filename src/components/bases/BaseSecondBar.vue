@@ -15,14 +15,10 @@
           </div>
           <!--三个目录-->
           <div class="index-nav-category-div col-xs-6">
-            <div v-for="category in indexNavCategories" :key="category.index" class="index-nav-categories "
-                 v-bind:class="{'common-text-selected': category.index == selectedIndex}"
-                 v-on:mouseover="indexNavHover($event)"
-                 v-on:mouseleave="indexNavLeave($event,category)"
-                @click="routeTo(category.href)"
-            >
+            <router-link v-for="category in indexNavCategories" :key="category.index" class="index-nav-categories"
+                         :to="category.href">
               {{category.name}}
-            </div>
+            </router-link>
 
           </div>
           <!--面包屑导航-->
@@ -39,12 +35,11 @@
 
 <script>
     export default {
-        name: "BaseSecondBar",
-      props: ['selectedIndex'],
+      name: "BaseSecondBar",
       data: function () {
         return {
           indexImgUrl: "/static/index_head_bg_2.jpg",
-          avatarUrl: "/static/head/17.jpg",
+          avatarUrl: "/static/head/5.jpg",
           indexNavCategories: [{
             index: 1,
             name: "首页",
@@ -67,19 +62,6 @@
         }
       },
       methods: {
-        indexNavHover: function ($event) {
-          // 这里可以这么用是因为只要hover都要加上两个class
-          $event.currentTarget.className = "index-nav-categories common-text-selected"
-        },
-        indexNavLeave: function ($event, category) {
-          // 这里不能像上面用是因为本来就有两个class的不能给他删掉了
-          if (category.index != this.selectedIndex) {
-            $event.currentTarget.className = "index-nav-categories"
-          }
-        },
-        routeTo: function(url){
-          window.location.href = url
-        }
       }
     }
 </script>
@@ -125,9 +107,9 @@
   .index-nav-avatar-div {
     width: 200px;
     height: 200px;
-    border: 1px solid #ccc;
+
     padding: 5px;
-    background: #fff;
+    background: rgba(100,100,100,0.2);
     border-radius: 15px;
     position: absolute;
     top: -100px;
@@ -163,6 +145,8 @@
     font-weight: 500;
     padding-bottom: 13px;
     transition: all 0.5s;
+    text-decoration: none;
+    color: #333;
   }
 
   /*面包屑导航*/
@@ -200,4 +184,22 @@
       display: block;
     }
   }
+
+
+  .index-nav-categories:hover{
+    color: #F1562A;
+  }
+
+  .router-link-active {
+    text-decoration: none;
+
+  }
+
+  .router-link-exact-active{
+    text-decoration: none;
+    color: #F1562A;
+  }
+
+
+
 </style>

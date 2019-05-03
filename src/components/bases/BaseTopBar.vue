@@ -10,49 +10,49 @@
         <button v-for="btn of btns" class="common-btn top-btn">
           {{btn.value}}
         </button>
-        <div class="avatar-div"
-             @mouseover="showUserMenu=true"
-              @mouseleave="showUserMenu=false">
-          <template v-if="isLogin">
-            <img :src="userHeadImgUrl" class="head-img"/>
-          </template>
-          <template v-else>
+        <template v-if="isLogin">
+          <div class="avatar-div" @mouseover="showUserMenu=true"
+               @mouseleave="showUserMenu=false">
+              <img :src="userHeadImgUrl" class="head-img"/>
+            <!--transition是用来渐变显示的，这样的好处其实是方便鼠标移动到外边那个div内部，如果不是渐变，很容易就移出去了-->
+            <transition name="fade">
+              <div class="user-menu" v-if="showUserMenu">
+                <ul class="user-menu-ul">
+                  <li class="user-menu-li">
+                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                    <a href="#" class="user-menu-a">个人中心</a>
+                  </li>
+                  <li class="user-menu-li">
+                    <!--<i class="fa fa-cog" aria-hidden="true"></i>-->
+                    <i class="fa fa-meh-o" aria-hidden="true"></i>
+                    <a href="#" class="user-menu-a">账号设置</a>
+                  </li>
+                  <li class="user-menu-li">
+                    <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+                    <a href="#" class="user-menu-a">我的博客</a>
+                  </li>
+                  <li class="user-menu-li">
+                    <i class="fa fa-server" aria-hidden="true"></i>
+                    <a href="#" class="user-menu-a">博客管理</a>
+                  </li>
+                  <li class="user-menu-li">
+                    <!--<i class="fa fa-empire" aria-hidden="true"></i>-->
+                    <!--<i class="fa fa-frown-o" aria-hidden="true"></i>-->
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                    <a href="#" class="user-menu-a">退出登录</a>
+                  </li>
+                </ul>
+              </div>
+            </transition>
+          </div>
+        </template>
+        <template v-else>
+          <div class="avatar-div">
             <button class="common-btn top-btn" @click="appearLogin()">
               登录/注册
             </button>
-          </template>
-
-          <!--transition是用来渐变显示的，这样的好处其实是方便鼠标移动到外边那个div内部，如果不是渐变，很容易就移出去了-->
-          <transition name="fade">
-            <div class="user-menu" v-if="showUserMenu">
-              <ul class="user-menu-ul">
-                <li class="user-menu-li">
-                  <i class="fa fa-user-o" aria-hidden="true"></i>
-                  <a href="#" class="user-menu-a">个人中心</a>
-                </li>
-                <li class="user-menu-li">
-                  <!--<i class="fa fa-cog" aria-hidden="true"></i>-->
-                  <i class="fa fa-meh-o" aria-hidden="true"></i>
-                  <a href="#" class="user-menu-a">账号设置</a>
-                </li>
-                <li class="user-menu-li">
-                  <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
-                  <a href="#" class="user-menu-a">我的博客</a>
-                </li>
-                <li class="user-menu-li">
-                  <i class="fa fa-server" aria-hidden="true"></i>
-                  <a href="#" class="user-menu-a">博客管理</a>
-                </li>
-                <li class="user-menu-li">
-                  <!--<i class="fa fa-empire" aria-hidden="true"></i>-->
-                  <!--<i class="fa fa-frown-o" aria-hidden="true"></i>-->
-                  <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                  <a href="#" class="user-menu-a">退出登录</a>
-                </li>
-              </ul>
-            </div>
-          </transition>
-        </div>
+          </div>
+        </template>
 
       </div>
     </div>
@@ -372,6 +372,7 @@
     position: absolute;
     margin-left: 10px;
     margin-top: 5px;
+    z-index: 10;
   }
 
   .mobile-top-bar-container {
@@ -657,11 +658,10 @@
     width: 120px;
     background: #fff;
     position: absolute;
-    padding-top: 60px;
-    z-index: 15;
-    margin-left: -70px;
+    margin-top: 40px;
+    padding-top: 20px;
+    z-index: 9;
     border-radius: 0 0 10px 10px;
-    z-index: -1;
     box-shadow:0px 15px 10px -15px #999;
   }
 
@@ -674,6 +674,7 @@
 
   .user-menu-ul{
     list-style: none;
+
   }
 
   .user-menu-li{

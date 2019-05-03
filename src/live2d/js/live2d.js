@@ -2803,10 +2803,10 @@
           default:
             alert("profile _$6 _$Ui : " + t)
         }
-        arguments.length < 2 && (e = !0), e && console.log("profile : " + t.PROFILE_NAME);
-        for (var i in t) st[i] = t[i], e && console.log("  [" + i + "] = " + t[i])
+        arguments.length < 2 && (e = !0), e;
+        for (var i in t) st[i] = t[i], e
       },st.init = function () {
-        st._$6b && (console.log("Live2D %s", st._$2s), st._$6b = !1, st.initProfile())
+        st._$6b && (st._$6b = !1, st.initProfile())
       },st.getVersionStr = function () {
         return st._$2s
       },st.getVersionNo = function () {

@@ -22,7 +22,7 @@ var message_Path = "/static/"
 var home_Path = document.location.protocol + '//' + window.document.location.hostname + ':8080' + '/';
 
 var userAgent = window.navigator.userAgent.toLowerCase();
-console.log(userAgent);
+//console.log(userAgent);
 var norunAI = ["android", "iphone", "ipod", "ipad", "windows phone", "mqqbrowser", "msie", "trident/7.0"];
 var norunFlag = false;
 
@@ -72,7 +72,7 @@ if (!norunFlag) {
     };
 
     var re = /x/;
-    console.log(re);
+   // console.log(re);
     re.toString = function () {
       showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 5000);
       talkValTimer();
@@ -249,7 +249,7 @@ if (!norunFlag) {
           checkSleep();
         }, 200);
       }
-      console.log(sleepTimer_);
+      //console.log(sleepTimer_);
     }
   }
 
@@ -359,7 +359,7 @@ if (!norunFlag) {
     $('#talk_send').on('click', function () {
       var info_ = $('#AIuserText').val();
       userId_ = $('#AIuserName').val();
-      console.log(info_ + "  " + userId_)
+      //console.log(info_ + "  " + userId_)
       if (info_ == "") {
         showMessage('写点什么吧！', 0);
         return;
