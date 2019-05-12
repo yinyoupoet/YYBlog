@@ -274,3 +274,24 @@ body {
   background: #1ABC9C;
   color: #fff;
 }
+
+
+.common-btn-2{
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 15px;
+  outline: none;
+  border: 1px solid #786450;
+  background: #fff;
+  color: #786450;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.common-btn-2:hover{
+  background: #786450;
+  color: #fff;
+}

@@ -1,0 +1,33 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1557286132875'); /* IE9 */
+  src: url('iconfont.eot?t=1557286132875#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAPsAAsAAAAACEgAAAOfAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqDXIM3ATYCJAMUCwwABCAFhG0HUhtNBxHVmzXJfh7YMWT6gs7sS0dPGGEiQT8HD3ye9T7SzaYDoKMVmEnXwAnCTS7WvPHWAPD95hyh8BGqJPf85tFfbz+lo5dmVKvu/3PMdGkNln9tc8toigbaGw14QFHXSQc00DuQO1G+Yewmgob4MARgkUEZRJNmbWxMNGCfAMSIoYP7YmZM6IZqgYnAVXGhRqzBwJRL5V1gNf958YNKwgSJoQAndhjUdAANPpf67lNzQnPoQRGIp3MAxmWggDKABjGu0jUCFaXKoLC8v9M0ACxMJPJzqc9VP9f67guF8GUH0ljwHx4oNBIBwgWoDAOggZLW8LkU5kPB56qiKnUtmQ8J332SZ3mQAYAFuICV8BiA83CMEoFAuqKiquaH9R/caYDTYfzyR+g5D62IZY+FMfeJe3rE6ctpeueVqpHnrmUau65OtzcsS3gcsH2+Yr/fGww6m7bv27dna7zfZ/sCTiCYP6nYay07OPeQO3z5AeSc/ckrhNd7NSCCQa/fX+zz2csC9ezijTv2n05wRlp1cG6i19m0+9C5+L6N5EDAeaTff+DA7NlXGjfevPlS59me2Bw7J9Zj851UOoVTIaQcFaogHRGVTo46fOhuzt19W6yG5RpUzNroaZ7fbHW1Nsmt01otDG9famCGPfhh6Zjh/c8PKDU4/3qDOt1r9Ep50L51xxaPrK71V6/ZGjPZMyWGmCX4Bos9k2N4s33kyN4F4+qprXfvbCUBdeeOYvo7d+Xl9cYV/Bk50nHuiiVRd2X2ESPuZG/Nviwp1L1Lnyi375AToWH7dtUpd2xP0jt2MAUwreYojg/NUAHl/Orf4ZsxuEnvyDp/TLcG4Ol//1tuCdEoB/6Xms7iHyvuOKJ9KTAb2m3HItdjUHUClfTmLOB3+mJ4PY0nHhKHwDTFMkhKkA4KEw9SY8uAgZsq4MKkPliUpvnlbmIZh0LokkApFkogiOIYSCK4Booo7iE19hUYJPALXEQJBRaOiL2hm3wx1GpsC4ziRfWfOhsDI6vuRPUVzdsZSUs55QkZuyiVWZHPXhAgU5wyfppKlYklejpLj4NzkZLEHlazVjWd8pyrviiz0U92NBYYxYvqP3U2BqazdVf4/iuatzPS0NETfELGbnEqs6ID8qIKnTpu5TPjp6lUmViip7NUCOeir0rVm3pYzdoBiXTK4STuqsqW1/gXKDR6AE80hBRKaGEIF2b/Fnao4+8o1tfOhGHhjcOKwYyTCQA=') format('woff2'),
+  url('iconfont.woff?t=1557286132875') format('woff'),
+  url('iconfont.ttf?t=1557286132875') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1557286132875#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-checkbox:before {
+  content: "\ead4";
+}
+
+.icon-checkboxblank:before {
+  content: "\e63a";
+}
+
+.icon-male:before {
+  content: "\e62a";
+}
+
+.icon-female:before {
+  content: "\e635";
+}
+

@@ -16,9 +16,12 @@ import './live2d/css/live2d.css'
 import './style/font-awesome.css'
 import './style/csshake.css'
 import './api/md5'
+import './style/bootstrap-3.3.4'
 
 
 import './api/md-avatar'
+
+
 
 Vue.prototype.$http = axios
 

@@ -7,9 +7,13 @@
         <div class="search-div">
           <input type="text" class="search-input" placeholder="Search...">
         </div>
-        <button v-for="btn of btns" class="common-btn top-btn">
-          {{btn.value}}
+
+
+
+        <button v-for="(btn,index) of btns" class="common-btn top-btn" v-show="isLogin" @click="linkTo(btn.href)">
+          {{btn.value}}<span v-if="index==0 && notify" class="notify-span"></span>
         </button>
+
         <template v-if="isLogin">
           <div class="avatar-div" @mouseover="showUserMenu=true"
                @mouseleave="showUserMenu=false">
@@ -20,26 +24,26 @@
                 <ul class="user-menu-ul">
                   <li class="user-menu-li">
                     <i class="fa fa-user-o" aria-hidden="true"></i>
-                    <a href="#" class="user-menu-a">个人中心</a>
+                    <router-link :to="'/userProfile/' + userId +''" class="user-menu-a">个人中心</router-link>
                   </li>
                   <li class="user-menu-li">
                     <!--<i class="fa fa-cog" aria-hidden="true"></i>-->
                     <i class="fa fa-meh-o" aria-hidden="true"></i>
-                    <a href="#" class="user-menu-a">账号设置</a>
+                    <router-link :to="'/userAccountManager/' + userId+''" class="user-menu-a">账号设置</router-link>
                   </li>
                   <li class="user-menu-li">
                     <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
-                    <a href="#" class="user-menu-a">我的博客</a>
+                    <router-link :to="'/user/' + userId+''" class="user-menu-a">我的博客</router-link>
                   </li>
                   <li class="user-menu-li">
                     <i class="fa fa-server" aria-hidden="true"></i>
-                    <a href="#" class="user-menu-a">博客管理</a>
+                    <router-link :to="'/userBlogManager/' + userId+''" class="user-menu-a">博客管理</router-link>
                   </li>
                   <li class="user-menu-li">
                     <!--<i class="fa fa-empire" aria-hidden="true"></i>-->
                     <!--<i class="fa fa-frown-o" aria-hidden="true"></i>-->
                     <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                    <a href="#" class="user-menu-a">退出登录</a>
+                    <a href="#" class="user-menu-a" @click="signOut()">退出登录</a>
                   </li>
                 </ul>
               </div>
@@ -126,7 +130,14 @@
           <button class="login-register-btn" @click="doRegister()">注册</button>
         </div>
 
+
+
       </div>
+    </div>
+
+    <!--loading框-->
+    <div v-if="showLoading" class="loading-main">
+      <BaseLoading class="loading-div"></BaseLoading>
     </div>
 
   </div>
@@ -134,27 +145,31 @@
 
 <script>
 
+  import BaseLoading from "./BaseLoading";
   export default {
     name: "BaseTopBar",
-
+    components: {BaseLoading},
     created(){
       // 刚进入页面，对页面进行初始化操作
       if(sessionStorage.getItem("isLogin") == null || sessionStorage.getItem("isLogin") == 'false'){
         this.isLogin = false;
       }else {
+        // 其余初始化操作只需在用户已登录的前提下进行
         this.isLogin = true;
-      }
+        this.userId = sessionStorage.getItem("userId");
 
-      if(sessionStorage.getItem('userHeadImgUrl') != null){
-        this.userHeadImgUrl = sessionStorage.getItem('userHeadImgUrl');
-      }else{
-        var userName = sessionStorage.getItem("userName");
-        var avatar = new mdAvatar({
-          size: 100,
-          text: userName
-        });
-        var tempSrc = avatar.toDataURL("image/png");
-        this.userHeadImgUrl = tempSrc;
+        if(sessionStorage.getItem('userHeadImgUrl') != null){
+          // 如果设置了头像
+          this.userHeadImgUrl = sessionStorage.getItem('userHeadImgUrl');
+        }else{
+          var userName = sessionStorage.getItem("userName");
+          var avatar = new mdAvatar({
+            size: 100,
+            text: userName
+          });
+          var tempSrc = avatar.toDataURL("image/png");
+          this.userHeadImgUrl = tempSrc;
+        }
       }
     },
 
@@ -162,13 +177,14 @@
       return {
         btns: [
           {
-            value: "首页",
+            value: "消息",
             href: "#"
           },
           {
-            value: "友链",
-            href: "#"
+            value: "写博客",
+            href: "/editor"
           }],
+        notify: true, /*是否有新消息*/
         isLogin: false,
         authorName: '吟游诗人',
         showMenu: false,  /*手机访问的时候的菜单*/
@@ -179,6 +195,9 @@
         loginUserRepeatPwd: '',  /*登录注册用户重复密码*/
         userHeadImgUrl: '',  /*用户头像图片地址，自己的*/
         showUserMenu: false,  /*用户移动鼠标到头像上，则会显示用户菜单*/
+        showLoading: false,     /*用来在正在处理登录、注册时显示loading*/
+
+        userId: '',       /*用户ID，只有在用户登录之后才会有，用处自然是很大的*/
       }
     },
 
@@ -211,6 +230,8 @@
       },
       doLogin: function(){
 
+        this.showLoading = true;
+
         if(this.loginUserName.trim() == ""){
           alert("请输入用户名");
           return;
@@ -223,9 +244,17 @@
           userName: this.loginUserName,
           userPwd: this.loginUserPwd.MD5()
         }).then((response) => {
+
+          console.log(response);
+          this.userId = response.data.userAccount.userId;
+
+
           if(response.data.state == 'false'){
             // 出错了
+            var error = response.data.error;
             alert(error);
+            this.showLoading = false;
+            this.loginUserPwd = ''
             return;
           }
           // 否则就是登录成功了
@@ -246,13 +275,20 @@
           var tempSrc = avatar.toDataURL("image/png");
           this.userHeadImgUrl = tempSrc;
 
+
+          this.showLoading = false;
         }).catch((error) => {
           console.log("error: " + error);
+          alert("网络错误...");
+          this.showLoading = false;
         });
 
 
       },
       doRegister: function() {
+
+        this.showLoading = true;
+
         // 先验证用户名、密码等是否合法，合法才继续
         // 不过由于用户名重复等问题已经在后台进行了验证，因此前端可以稍微简单一点
         if(this.loginUserName.trim() == ""){
@@ -281,6 +317,8 @@
           // 判断是成功还是失败了
           if(response.data.state == "false"){
             alert(response.data.error);
+
+            this.showLoading = false;
             return;
           }
           // 否则就是登录成功了
@@ -303,10 +341,22 @@
           this.userHeadImgUrl = tempSrc;
 
 
-
+          this.showLoading = false;
         }).catch(function (error) {
+          this.showLoading = false;
           console.log(error);
         });
+      },
+      signOut: function() {
+        // 登出账号
+        // 暂时先不提示
+        sessionStorage.clear();
+        this.isLogin = false;
+        this.userId = ''
+        this.showUserMenu = false
+      },
+      linkTo: function(url) {
+        this.$router.push(url)
       }
     }
   }
@@ -318,7 +368,7 @@
     height: 56px;
     padding: 4px;
     /*background: #fff;*/
-    background: rgba(255,255,255,0.8);
+    background: #fafafa;
     min-width: 300px;
   }
 
@@ -347,6 +397,7 @@
   }
 
   .search-div {
+    margin-top: 6px;
     display: inline-block;
     position: relative;
 
@@ -656,7 +707,7 @@
 
   .user-menu{
     width: 120px;
-    background: #fff;
+    background: #fafafa;
     position: absolute;
     margin-top: 40px;
     padding-top: 20px;
@@ -691,7 +742,7 @@
   .user-menu-a{
     margin-left: 5px;
     cursor:pointer;
-    color: #333;
+    color: #e87b00;
     font-family: "Comic Sans MS", "Helvetica Neue", 微软雅黑, "Microsoft Yahei", "Microsoft Yahei", -apple-system, sans-serif;
     transition: all 0.5s;
   }
@@ -705,7 +756,7 @@
     cursor:pointer;
   }
   .user-menu-a:visited {
-    color: #333;
+    color: #e87b00;
     text-decoration:none;
     cursor:pointer;
   }
@@ -718,10 +769,27 @@
   }
 
 
+  .notify-span {
+    display: inline-block;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #f1562a;
+    border-radius: 50%;
+  }
 
+  .loading-div {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-
-
-
-
+  .loading-main {
+    position: fixed;
+    z-index: 50;
+    background: rgba(0,0,0,0);
+    width: 99%;
+    height: 100%;
+  }
 </style>

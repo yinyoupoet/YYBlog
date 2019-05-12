@@ -66,6 +66,7 @@
                 readTimes: 12345,
                 category: "日常",
                 commentNum: 15,
+                isOriginal: true,     /*是否原创*/
                 abstractPic: "/static/test/1.jpg",
                 abstractText: "是的！xiaowiba 小程序版 先已震撼发布！\n" +
                   "              功能什么的很简单，就是展示博客文章内容。边学边做，无聊的时候写点。\n" +
@@ -84,6 +85,7 @@
                 readTimes: 12345,
                 category: "日常",
                 commentNum: 15,
+                isOriginal: true,     /*是否原创*/
                 abstractPic: "/static/test/1.jpg",
                 abstractText: "是的！xiaowiba 小程序版 先已震撼发布！\n" +
                   "              功能什么的很简单，就是展示博客文章内容。边学边做，无聊的时候写点。\n" +

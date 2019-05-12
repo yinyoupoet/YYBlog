@@ -1,5 +1,6 @@
 <template>
     <div>
+      <BaseTopBar></BaseTopBar>
       <div class="blog-page-div">
         <!--一个菜单栏，目前只有一个返回主页-->
         <div class="left-menu-icon">
@@ -29,6 +30,10 @@
           <div class="blog-text-div">
             <BaseBlogContent :blogContent="blogContent"></BaseBlogContent>
           </div>
+
+          <div>
+            <BaseBottomBar></BaseBottomBar>
+          </div>
         </div>
       </div>
     </div>
@@ -36,9 +41,11 @@
 
 <script>
     import BaseBlogContent from "../../components/bases/BaseBlogContent";
+    import BaseBottomBar from "../../components/bases/BaseBottomBar";
+    import BaseTopBar from "../../components/bases/BaseTopBar";
     export default {
         name: "BlogMainPage",
-      components: {BaseBlogContent},
+      components: {BaseTopBar, BaseBottomBar, BaseBlogContent},
       mounted(){
           this.doAutoType($('.blog-title-span'), 150)
         },
@@ -105,12 +112,12 @@
 
   .left-menu-icon{
     position: fixed;
-    top: 50px;
+    top: 90px;
     left: 50px;
   }
 
   .blog-content{
-    padding: 50px 20px;
+    padding: 50px 20px 0;
   }
 
   .blog-title{

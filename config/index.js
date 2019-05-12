@@ -19,7 +19,15 @@ module.exports = {
         pathRewrite: {
           '^/server': '/'
         }
-      }
+      },
+      '/codex': {
+        target: 'https://codex.so',
+        secure: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/codex' : '/'
+        }
+      },
     },
 
 
