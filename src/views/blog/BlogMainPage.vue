@@ -1,30 +1,35 @@
 <template>
     <div>
       <BaseTopBar></BaseTopBar>
-      <div class="blog-page-div">
+      <div class="blog-page-div row">
         <!--一个菜单栏，目前只有一个返回主页-->
-        <div class="left-menu-icon">
-          <router-link class="common-title-link" :to="blogerMainPageUrl">
+        <div class="left-menu-icon col-xs-2">
+          <router-link class="common-title-link left-menu-link" :to="blogerMainPageUrl">
             <span class="fa-stack fa-lg">
               <i class="fa fa-square-o fa-stack-2x"></i>
               <i class="fa fa-home fa-stack-1x"></i>
             </span>
           </router-link>
+          <router-link class="common-title-link left-menu-link" :to="blogerMainPageUrl">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-pencil fa-stack-1x" aria-hidden="true"></i>
+            </span>
+          </router-link>
         </div>
-        <div class="container blog-content">
+        <div class="blog-content col-xs-8">
           <div class="blog-title">
             <span class="common-title-link blog-title-span">{{blogTitle}}</span>
           </div>
           <div class="blog-info-bar">
+            <i class="fa fa-optin-monster" aria-hidden="true"></i>{{categoryName}} •
             <i class="fa fa-github-alt" aria-hidden="true"></i>{{publishDate}} •
             <i class="fa fa-eye" aria-hidden="true"></i>{{readTimes}}浏览 •
-            <i class="fa fa-check-circle" aria-hidden="true"></i>{{category}} •
-            <i class="fa fa-commenting" aria-hidden="true"></i>{{commentNum}}条评论
-          </div>
-          <div class="blog-tags">
-            <div v-for="(item, index) in blogTagList" :key="index" class="blog-tag-div">
-              <router-link :to="item.tagUrl" class="blog-tag-link">{{item.tagName}}</router-link>
-            </div>
+            <i class="fa fa-check-circle" aria-hidden="true"></i>{{tagName}} •
+            <i class="fa fa-commenting" aria-hidden="true"></i>{{commentNum}}条评论 •
+            <i class="fa fa-anchor" aria-hidden="true"></i><span v-if="originType=='原创'">{{originType}}</span>
+            <span v-else-if="originUrl!= null && originUrl.trim()!=''"><a :href="originUrl" target="_blank">{{originType}}</a></span>
+            <span v-else>{{originType}}</span>
           </div>
           <!--中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式-->
           <div class="blog-text-div">
@@ -35,6 +40,12 @@
             <BaseBottomBar></BaseBottomBar>
           </div>
         </div>
+
+        <div class="col-xs-2 right-bar">
+          <BaseUserPageInfo></BaseUserPageInfo>
+        </div>
+
+
       </div>
     </div>
 </template>
@@ -43,34 +54,68 @@
     import BaseBlogContent from "../../components/bases/BaseBlogContent";
     import BaseBottomBar from "../../components/bases/BaseBottomBar";
     import BaseTopBar from "../../components/bases/BaseTopBar";
+    import BaseSideBar from "../../components/bases/BaseSideBar";
+    import BaseUserPageInfo from "../../components/bases/BaseUserPageInfo";
     export default {
         name: "BlogMainPage",
-      components: {BaseTopBar, BaseBottomBar, BaseBlogContent},
-      mounted(){
-          this.doAutoType($('.blog-title-span'), 150)
-        },
+      components: {BaseUserPageInfo, BaseSideBar, BaseTopBar, BaseBottomBar, BaseBlogContent},
+      mounted() {
+        // 获取用户ID，用来判断其是否具有该博客的访问权限
+        var userId = sessionStorage.getItem("userId");
+        if (userId == null) {
+          // 表示没有登录，则默认为0
+          userId = 0;
+        }
+
+        // 根据URL获取博客ID
+        let blogId = this.$route.params.id;
+        this.blogId = blogId;
+        this.$http.post('http://127.0.0.1:8080/blog/initBlog', {
+          userId: userId,
+          blogId: blogId
+        }).then((response) => {
+          console.log(response);
+          var blog = response.data.blog;
+          var authorId = blog.authorId;
+          this.blogerMainPageUrl = '/user/' + authorId;
+          this.blogTitle = blog.blogTitle;
+          this.publishDate = response.data.publishTime;
+          this.readTimes = blog.visitNum;
+          this.categoryName = response.data.categoryName;
+          this.tagId = blog.tagId;
+          this.tagName = response.data.tagName;
+          this.commentNum = blog.commentNum;
+          this.blogContent = response.data.parsedContent;
+          this.originType = blog.originType;
+          this.originUrl = blog.originUrl;
+
+          this.doAutoType($('.blog-title-span'), 150);
+        }).catch((exception) => {
+          console.log(exception);
+          alert("加载失败");
+        });
+
+      },
         data: function() {
           return {
-            blogerMainPageUrl: '/user/123',
-            blogTitle: '我自横刀向天笑',
-            publishDate: '2019-01-02 20:12:13',
-            readTimes: 123,
-            category: '日常',
-            commentNum: 125,
-            blogTagList: [{
-              tagName: '日常',
-              tagUrl: '/user/1/archive/tag/1'
-            },{
-              tagName: '肥宅',
-              tagUrl: '/user/1/archive/tag/2'
-            }],
-            blogContent: '<p>中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式中间是博客正文了，但是关于博客正文的样式，必须有单独的设置，因此采用组件的方式</p><a href="http://www.baidu.com">888</a>' +
-              '<img src="/static/test/1.jpg">'
+            blogId: '',
+            blogerMainPageUrl: '',
+            blogTitle: '',
+            publishDate: '',
+            readTimes: '',
+            categoryName: '',
+            tagId: '',
+            tagName: '',
+            commentNum: '',
+            blogContent: '',
+            originType: '',
+            originUrl: ''
           }
         },
       methods: {
         doAutoType: function(ele,t) {
-          var str = ele.html();
+          console.log("doAutoType");
+          var str = this.blogTitle;
           ele.css("opacity","0");
 
           ele.html(str.substring(0,1));
@@ -109,6 +154,10 @@
     font-family: 'Comic Sans MS','Open Sans','Microsoft Yahei','Microsoft Yahei',-apple-system,sans-serif;
   }
 
+  .left-menu-link {
+    display: block;
+  }
+
 
   .left-menu-icon{
     position: fixed;
@@ -118,6 +167,8 @@
 
   .blog-content{
     padding: 50px 20px 0;
+    margin: 0 auto;
+    float: none;
   }
 
   .blog-title{
@@ -134,30 +185,6 @@
     letter-spacing: 1px;
   }
 
-  .blog-tags{
-    text-align: center;
-    margin-top: 6px;
-  }
-
-  .blog-tag-div{
-    display: inline-block;
-    margin: 5px;
-    text-align: center;
-  }
-
-  .blog-tag-link{
-    color: #999;
-    text-decoration: none;
-    border-radius: 3px;
-    border: 1px solid #999;
-    padding: 2px 8px;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .blog-tag-link:hover{
-    border: 1px solid #e65100;
-    color: #e65100;
-  }
 
   .blog-text-div{
     margin-top: 50px;
@@ -166,6 +193,12 @@
     font-family: 'Comic Sans MS','Open Sans','Microsoft Yahei','Microsoft Yahei',-apple-system,sans-serif;
     color: #333;
     font-weight: 900;
+    min-height: 300px;
   }
 
+  .right-bar {
+    position: fixed;
+    top: 90px;
+    right: 50px;
+  }
 </style>

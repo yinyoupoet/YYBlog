@@ -68,7 +68,7 @@ export default new Router({
       component: EditBlog
     },
     {
-      path: '/userAccountManager/:id',
+      path: '/userAccountManager',
       component: UserAccountManager
     },
     {

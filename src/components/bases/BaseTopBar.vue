@@ -2,7 +2,7 @@
   <div class="top-bar">
     <!--不是手机的时候-->
     <div class="container top-bar-container">
-      <img src="../../assets/logo1_1.png" class="logo-img">
+      <img src="../../assets/logo1_1.png" class="logo-img" @click="() => {this.$router.push('/')}">
       <div class="topbar-right">
         <div class="search-div">
           <input type="text" class="search-input" placeholder="Search...">
@@ -29,7 +29,7 @@
                   <li class="user-menu-li">
                     <!--<i class="fa fa-cog" aria-hidden="true"></i>-->
                     <i class="fa fa-meh-o" aria-hidden="true"></i>
-                    <router-link :to="'/userAccountManager/' + userId+''" class="user-menu-a">账号设置</router-link>
+                    <router-link to="/userAccountManager" class="user-menu-a">账号设置</router-link>
                   </li>
                   <li class="user-menu-li">
                     <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
@@ -172,7 +172,20 @@
         }
       }
     },
-
+    mounted() {
+      // 看是否有传进来的参数，如果有那么就改
+      var isL = this.$route.query.isLogin;
+      if (isL != null) {
+        sessionStorage.setItem("isLogin", isL);
+        this.isLogin = isL;
+      }
+      var showL = this.$route.query.showLogin;
+      if (showL != null) {
+        this.showLogin = showL;
+      }
+      //console.log("执行了");
+      //console.log(isL + showL);
+    },
     data: function () {
       return {
         btns: [
@@ -246,8 +259,6 @@
         }).then((response) => {
 
           console.log(response);
-          this.userId = response.data.userAccount.userId;
-
 
           if(response.data.state == 'false'){
             // 出错了
@@ -257,7 +268,10 @@
             this.loginUserPwd = ''
             return;
           }
+
+
           // 否则就是登录成功了
+          this.userId = response.data.userAccount.userId;
           this.showLogin = false;
           this.isLogin = true;
 
@@ -354,8 +368,14 @@
         this.isLogin = false;
         this.userId = ''
         this.showUserMenu = false
+        this.$router.go(0)
       },
       linkTo: function(url) {
+        if (this.isLogin == false) {
+          alert("请先登录");
+          this.showLogin = true;
+          return;
+        }
         this.$router.push(url)
       }
     }
@@ -424,6 +444,8 @@
     margin-left: 10px;
     margin-top: 5px;
     z-index: 10;
+    -o-object-fit: cover;
+    object-fit: cover;
   }
 
   .mobile-top-bar-container {
